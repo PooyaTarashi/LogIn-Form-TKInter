@@ -1,10 +1,10 @@
+from SignUp import sign_up
 from tkinter import *
 from tkinter import messagebox
-import ast
 
 window = Tk()
 window.title("Sign Up")
-window.geometry("925x500+300+200")
+window.geometry("925x480+300+200")
 window.config(bg="#fff")
 window.resizable(False, False)
 
@@ -15,8 +15,8 @@ frame = Frame(window, width=350, height=390, bg="#fff")
 frame.place(x=480, y=50)
 
 
-heading = Label(frame, text="Sign Up", fg="#57a1f8", bg="white", font=("Microsoft Yahei UI Light", 23, "bold"))
-heading.place(x=110, y=5)
+heading = Label(window, text="Sign Up", fg="#57a1f8", bg="white", font=("Microsoft Yahei UI Light", 23, "bold"))
+heading.place(x=170, y=45)
 
 
 
@@ -33,13 +33,33 @@ def deselect(arg):
         user_frame.config(bg='cyan')
 
 user = Entry(frame, width=25, fg='black', border=0, bg="white", font=("Microsoft Yahei UI Light", 11))
-user.place(x=30, y=80)
+user.place(x=30, y=10)
 user.insert(0, "Username")
 user.bind("<FocusIn>", select)
 user.bind("<FocusOut>", deselect)
 
 user_frame = Frame(frame, width=295, height=2, bg='black')
-user_frame.place(x=25, y=107)
+user_frame.place(x=25, y=37)
+#===============================================================
+
+def select(arg):
+    email.delete(0, 8)
+    email_frame.config(bg='blue')
+def deselect(arg):
+    if email.get() == '':
+        email.insert(0, "Email")
+        email_frame.config(bg='red')
+    else:
+        email_frame.config(bg='cyan')
+
+email = Entry(frame, width=25, fg='black', border=0, bg="white", font=("Microsoft Yahei UI Light", 11))
+email.place(x=30, y=80)
+email.insert(0, "Email")
+email.bind("<FocusIn>", select)
+email.bind("<FocusOut>", deselect)
+
+email_frame = Frame(frame, width=295, height=2, bg='black')
+email_frame.place(x=25, y=107)
 
 
 #===============================================================
@@ -92,7 +112,16 @@ reenter_password_frame.place(x=25, y=247)
 #===============================================================
 
 
-sign_up_btn = Button(frame, width=39, pady=7, text="Sign Up", bg="#57a1f8", fg="white", border=0)
+def sign_up_to_app():
+    username = user.get()
+    e_mail = email.get()
+    passcode = password.get()
+    pass_confirm = reenter_password.get()
+    sign_up(username, e_mail, passcode, pass_confirm)
+
+
+
+sign_up_btn = Button(frame, width=39, pady=7, text="Sign Up", bg="#57a1f8", fg="white", border=0, command=sign_up_to_app)
 sign_up_btn.place(x=35, y=280)
 
 have_account_lbl = Label(frame, text="I have an account,", fg="black", bg="white", font=("Microsoft YaHei UI Light", 9))
